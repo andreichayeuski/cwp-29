@@ -1,0 +1,51 @@
+type Pizza {
+    id: ID,
+    name: String,
+    colories: Int
+}
+
+type Weapon {
+    id: ID,
+    name: String,
+    dps: Float
+}
+
+type Turtle {
+    id: ID,
+    name: String,
+    dps: Float,
+    color: String,
+    weapon: Weapon,
+    favouritePizza: Pizza,
+    secondFavouritePizza: Pizza,
+    filterByFavouritePizza(filter: String): [Turtle]
+}
+
+input TurtleInput {
+    name: String,
+    color: String,
+    weaponId: Int,
+    favouritePizzaId: Int,
+    secondFavoritePizzaId: Int,
+}
+
+type Query {
+    turtles(filter: String): [Turtle],
+    turtle(id: Int!): Turtle,
+    weapons(limit: Int = 2, order: [[String]]): [Weapon],
+    weapon(id: Int!): Weapon,
+    pizzas(limit: Int = 2, order: [[String]]): [Pizza],
+    pizza(id: Int!): Pizza,
+}
+
+
+type Mutation {
+    createTurtle (turtle: TurtleInput!): Turtle,
+    updateTurtle (id: ID!, turtle: TurtleInput!): Int,
+    deleteTurtle (id: ID!): Int,
+
+    changeFavouritePizza (turtleId: ID!, pizzaId: ID, pizza: Int = 1): Turtle
+    changeFavouriteWeapon (turtleId: ID!, weaponId: ID): Turtle
+}
+
+
